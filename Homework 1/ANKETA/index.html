@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // ФИО
+      const lastName = prompt("Введите вашу фамилию:");
+      const firstName = prompt("Введите ваше имя:");
+      const middleName = prompt("Введите ваше отчество:");
+
+      if (!lastName  || !firstName || !middleName || 
+      !lastName.trim()  || !firstName.trim() || !middleName.trim()) {
+        //По условию alert должен быть один раз в конце
+        confirm("Вы ввели некорректные данные!");
+      } else {
+        // возраст
+        const age = parseInt(prompt("Введите ваш возраст в годах:"));
+
+        if (!age || age < 0 || age > 150) {
+          confirm("Вы ввели некорректный возраст!");
+        } else {
+          // пол
+          const genderMale = confirm(
+            'Ваш пол - мужской? Нажмите OK если "Да" или Отмена если "Нет"'
+          );
+
+          let gender;
+          if (genderMale) {
+            gender = "мужской";
+          } else {
+            gender = "женский";
+          }
+
+          // пенсионный возраст
+          const pensionAgeMale = 65;
+          const pensionAgeFemale = 58;
+
+          let pensioner;
+          if (genderMale) {
+            pensioner = age >= pensionAgeMale;
+          } else {
+            pensioner = age >= pensionAgeFemale;
+          }
+
+          let isPensioner;
+          if (pensioner) {
+            isPensioner = "да";
+          } else {
+            isPensioner = "нет";
+          }
+
+          // дополнительные данные
+          const ageInDays = age * 365;
+          const ageIn5Years = age + 5;
+
+          // сообщение
+          const message = 
+          "Ваше ФИО: " + lastName + " " + firstName + " " + middleName + 
+          "\nВаш возраст в годах: " + age + 
+          "\nВаш возраст в днях: " + ageInDays +
+          "\nЧерез 5 лет вам будет: " + ageIn5Years + 
+          "\nВаш пол: " + gender +
+          "\nВы на пенсии: " + isPensioner
+
+          alert(message);
+        }
+      }
+    </script>
+  </body>
+</html>
