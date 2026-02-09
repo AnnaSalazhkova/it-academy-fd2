@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Battleship</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="img/icons-battleship-1.png" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="nav-buttons">
+        <input type="button" value="⛵ Главная" class="btn-nav" onclick="switchToMainPage()" />
+        <input type="button" value="🎯 Игра" class="btn-nav" onclick="switchToGamePage()" />
+        <input type="button" value="🏆 Победители" class="btn-nav" onclick="switchToScorePage()" />
+        <input type="button" value="📜 Правила" class="btn-nav" onclick="switchToRulesPage()" />
+    </div>
+    <div id="IPage"></div>
+    <script src="pages/Main.js"></script>
+    <script src="battleship.js"></script>
+    <script src="pages/Game.js"></script>
+    <script src="pages/rules.js"></script>
+    <script src="pages/winners.js"></script>
+    <script src="script.js"></script>
+    <script src="https://fe.it-academy.by/JQ/jquery.js"></script>
+</body>
+
+</html>

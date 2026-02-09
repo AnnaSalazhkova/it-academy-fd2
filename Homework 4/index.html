@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Хранилище рецептов напитков</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            min-height: 50px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Хранилище рецептов напитков</h1>
+
+    <div>
+        <button class="button-add button" >
+            Ввод информации о напитке
+        </button>
+        <button class="button-get button" >
+            Получение информации о напитке
+        </button>
+        <button class="button-delete button" >
+            Удаление информации о напитке
+        </button>
+        <button class="button-alldrink button" >
+            Перечень всех напитков
+        </button>
+    </div>
+
+    <div id="result" class="result">
+        Результат операций будет отображаться здесь
+    </div>
+    <script>
+        function HashStorageFunc() {
+            const storage = {};
+
+        
+            this.addValue = function (key, value) {
+            storage[key] = value;
+            };
+
+        
+            this.getValue = function (key) {
+            return storage[key];
+            };
+
+            this.deleteValue = function (key) {
+            if (key in storage) {
+                delete storage[key];
+                return true; 
+            } else {
+                return false;
+            }
+            };
+
+            this.getKeys = function () {
+            return Object.keys(storage);
+            };
+        }
+
+        const drinkStorage = new HashStorageFunc();
+
+        function addDrink() {
+            const name = prompt("Введите название напитка:");
+
+            if (name === null) return;
+
+            if (!name.trim()) {
+                alert("Название не может быть пустым!");
+                return;
+            }
+            name = name.toLocaleLowerCase();
+            
+            const isAlcoholic = confirm(
+                "Это алкогольный напиток? (ОК - да, Отмена - нет)"
+            );
+
+            const recipe = prompt("Введите рецепт приготовления:");
+            if (recipe === null) return;
+
+            const drinkInfo = {
+                alcoholic: isAlcoholic,
+                recipe: recipe,
+            };
+
+            drinkStorage.addValue(name, drinkInfo);
+
+            showResult(`Напиток <strong>${name}</strong> успешно добавлен!`);
+        }
+
+    
+        function getDrink() {
+            const name = prompt("Введите название напитка:");
+            if (name === null) return;
+            name = name.toLocaleLowerCase();
+
+            const drinkInfo = drinkStorage.getValue(name);
+
+        
+            if (!drinkInfo ) {
+                showResult(`Напиток <strong>${name}</strong> не найден в хранилище.`);
+                return;
+            }
+
+            const result = `
+                <strong>Название:</strong> ${name}
+                <p><strong>Алкогольный:</strong> ${drinkInfo.alcoholic ? 'Да' : 'Нет'}</p>
+                <p><strong>Рецепт:</strong> ${drinkInfo.recipe}</p>
+            `;
+        
+            showResult(result);
+        }
+
+        function deleteDrink() {
+            const name = prompt("Введите название напитка для удаления:");
+            if (name === null) return;
+            name = name.toLocaleLowerCase();
+
+            const isDeleted = drinkStorage.deleteValue(name);
+
+            if (isDeleted) {
+                showResult(`Напиток <strong>${name}</strong> успешно удален.`);
+            } else {
+                showResult(`Напиток <strong>${name}</strong> не найден в хранилище.`);
+            }
+        }
+
+        function listDrinks() {
+
+            const allDrinks = drinkStorage.getKeys();
+
+            if (allDrinks.length === 0) {
+                showResult("В хранилище нет напитков.");
+                return;
+            }
+    
+            let result = `<h3>Всего напитков: ${allDrinks.length}</h3><ol>`;
+
+            allDrinks.forEach((drink) => {
+                result += `<li> ${drink}</li>`;
+            });
+            
+            result += '</ol>';
+            showResult(result);
+        }
+
+    
+        function showResult(text) {
+            document.getElementById("result").innerHTML = text;
+        }
+
+            document.addEventListener('DOMContentLoaded', () => {
+            
+            document.querySelector('.button-add').addEventListener('click', addDrink);
+            
+            document.querySelector('.button-get').addEventListener('click', getDrink);
+            
+            document.querySelector('.button-delete').addEventListener('click', deleteDrink);
+            
+            document.querySelector('.button-alldrink').addEventListener('click', listDrinks);
+
+        
+        listDrinks()
+            
+        });
+
+        
+    </script>
+</body>
+
+</html>
